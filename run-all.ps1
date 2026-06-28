@@ -7,7 +7,7 @@ Write-Host "=============================================" -ForegroundColor Cyan
 
 # 1. Start Eureka Server
 Write-Host "Starting Eureka Server on port 8761..." -ForegroundColor Yellow
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "Title 'Eureka Server'; mvn spring-boot:run -pl eureka-server"
+Start-Process powershell -ArgumentList "-NoExit", "-Command", "`$Host.UI.RawUI.WindowTitle = 'Eureka Server'; mvn spring-boot:run -pl eureka-server"
 Write-Host "Waiting 12 seconds for Eureka Server to warm up..." -ForegroundColor Yellow
 Start-Sleep -Seconds 12
 
@@ -24,13 +24,13 @@ $services = @(
 
 foreach ($svc in $services) {
     Write-Host "Starting $($svc.Name)..." -ForegroundColor Yellow
-    Start-Process powershell -ArgumentList "-NoExit", "-Command", "Title '$($svc.Name)'; mvn spring-boot:run -pl $($svc.Project)"
+    Start-Process powershell -ArgumentList "-NoExit", "-Command", "`$Host.UI.RawUI.WindowTitle = '$($svc.Name)'; mvn spring-boot:run -pl $($svc.Project)"
     Start-Sleep -Seconds 2  # Brief pause to stagger startup
 }
 
 # 3. Start API Gateway
 Write-Host "Starting API Gateway on port 8080..." -ForegroundColor Yellow
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "Title 'API Gateway'; mvn spring-boot:run -pl api-gateway"
+Start-Process powershell -ArgumentList "-NoExit", "-Command", "`$Host.UI.RawUI.WindowTitle = 'API Gateway'; mvn spring-boot:run -pl api-gateway"
 
 Write-Host "=============================================" -ForegroundColor Green
 Write-Host "All services startup commands issued!" -ForegroundColor Green

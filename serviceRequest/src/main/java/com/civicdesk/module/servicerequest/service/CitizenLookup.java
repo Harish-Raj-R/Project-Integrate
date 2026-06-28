@@ -38,9 +38,17 @@ public class CitizenLookup {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Citizen with ID " + citizenId + " does not exist"));
 
-        User account = userRepository.findById(citizen.getUserId())
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "User account for citizen " + citizenId + " does not exist"));
+        User account = null;
+        if (citizen.getUserId() != null) {
+            account = userRepository.findById(citizen.getUserId()).orElse(null);
+        }
+        if (account == null && citizen.getEmail() != null) {
+            account = userRepository.findByEmail(citizen.getEmail()).orElse(null);
+        }
+        if (account == null) {
+            throw new ResourceNotFoundException(
+                    "User account for citizen " + citizenId + " does not exist");
+        }
 
         // User status uses single-letter codes: "F" = Flagged (see DummyDataSeeder).
         if ("F".equalsIgnoreCase(account.getStatus())) {

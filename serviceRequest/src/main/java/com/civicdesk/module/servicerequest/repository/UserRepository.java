@@ -15,4 +15,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     /** Active officers in a department, used by auto-assignment to pick the least loaded one. */
     List<User> findByRoleAndStatusAndDepartmentId(String role, String status, String departmentId);
+
+    /** Lookup user by email for lookup fallback. */
+    java.util.Optional<User> findByEmail(String email);
 }

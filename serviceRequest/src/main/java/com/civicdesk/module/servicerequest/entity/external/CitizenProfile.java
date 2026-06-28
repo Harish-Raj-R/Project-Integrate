@@ -23,7 +23,7 @@ public class CitizenProfile {
     @Column(name = "citizen_id", length = 16)
     private String citizenId;
 
-    @Column(name = "user_id", nullable = false, length = 50, unique = true)
+    @Column(name = "user_id", length = 50, unique = true)
     private String userId;
 
     @Column(name = "national_id", length = 50)

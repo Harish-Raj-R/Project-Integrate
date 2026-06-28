@@ -40,6 +40,10 @@ public class OfficerAssignment {
                 userRepository.findByRoleAndStatusAndDepartmentId("Officer", "A", departmentId);
 
         if (officers.isEmpty()) {
+            officers = userRepository.findByRoleAndStatusAndDepartmentId("FO", "A", departmentId);
+        }
+
+        if (officers.isEmpty()) {
             throw new UnprocessableEntityException(
                     "No active officer is available in department " + departmentId
                             + " to handle this request.");
