@@ -1,0 +1,44 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: iam-service
+          uri: lb://iam-service
+          predicates:
+            - Path=/civicDesk/iam/**, /civicDesk/audit/**
+        - id: citizen-service
+          uri: lb://citizen-service
+          predicates:
+            - Path=/civicDesk/citizenProfile/**
+        - id: grievance-service
+          uri: lb://grievance-service
+          predicates:
+            - Path=/civicDesk/grievance/**
+        - id: servicerequest-service
+          uri: lb://servicerequest-service
+          predicates:
+            - Path=/civicDesk/serviceRequest/**
+        - id: permit-service
+          uri: lb://permit-service
+          predicates:
+            - Path=/civicDesk/permits/**
+        - id: publicworks-service
+          uri: lb://publicworks-service
+          predicates:
+            - Path=/civicDesk/workorders/**
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/civicDesk/notificationsAlerts/**
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    preferIpAddress: true
